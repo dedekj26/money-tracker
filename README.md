@@ -1,64 +1,126 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Money Tracker
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Money Tracker adalah aplikasi pengelolaan keuangan pribadi yang memungkinkan pengguna untuk melacak pemasukan dan pengeluaran mereka dengan mudah. Aplikasi ini dibangun menggunakan Laravel 8 dengan Jetstream untuk autentikasi dan UI dasar.
 
-## About Laravel
+## Teknologi yang Digunakan
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **PHP 7.4+**
+- **Laravel 8** - Framework PHP
+- **Jetstream** - Starter kit untuk autentikasi dan UI
+- **Livewire** - Framework full-stack untuk Laravel
+- **MySQL/MariaDB** - Database
+- **Tailwind CSS 3** - Framework CSS
+- **Alpine.js** - Framework JavaScript minimal
+- **Laravel Mix** - Asset compilation
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Manajemen kategori (pemasukan/pengeluaran)
+- Manajemen dompet (sumber dana)
+- Pencatatan transaksi keuangan
+- Konfigurasi periode laporan
+- Autentikasi pengguna dengan Jetstream
 
-## Learning Laravel
+## Panduan Instalasi
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Persyaratan Sistem
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP 7.4 atau lebih tinggi
+- Composer
+- Node.js dan NPM
+- MySQL/MariaDB
 
-## Laravel Sponsors
+### Langkah-langkah Instalasi
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+1. **Clone repositori**
 
-### Premium Partners
+   ```bash
+   git clone <repository-url>
+   cd money_tracker
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+2. **Instal dependensi PHP**
 
-## Contributing
+   ```bash
+   composer install
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3. **Instal dependensi JavaScript**
 
-## Code of Conduct
+   ```bash
+   npm install
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4. **Salin file .env**
 
-## Security Vulnerabilities
+   ```bash
+   cp .env.example .env
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+5. **Generate application key**
 
-## License
+   ```bash
+   php artisan key:generate
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+6. **Konfigurasi database**
+
+   Buka file `.env` dan sesuaikan konfigurasi database:
+
+   ```
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=money_tracker
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+
+7. **Jalankan migrasi database**
+
+   ```bash
+   php artisan migrate
+   ```
+
+8. **Kompilasi asset**
+
+   ```bash
+   npm run dev
+   ```
+
+   Untuk production:
+
+   ```bash
+   npm run prod
+   ```
+
+9. **Jalankan server lokal**
+
+   ```bash
+   php artisan serve
+   ```
+
+   Aplikasi akan tersedia di `http://localhost:8000`
+
+## Optimasi
+
+Aplikasi ini telah dioptimasi untuk generasi PDF dengan:
+1. Mengubah penggunaan logo dari base64 ke direct image URL
+2. Menurunkan DPI dari 150 ke 96
+3. Implementasi sistem caching untuk PDF
+4. Selective loading relasi dalam database
+5. Penggunaan simbol Unicode alih-alih font spesifik
+
+## Pengembangan
+
+Untuk pengembangan, Anda dapat menggunakan perintah berikut:
+
+```bash
+npm run watch
+```
+
+Ini akan memantau perubahan pada file asset dan mengkompilasi ulang secara otomatis.
+
+## Lisensi
+
+Aplikasi ini dilisensikan di bawah [MIT license](https://opensource.org/licenses/MIT).
