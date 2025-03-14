@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\WalletController;
+use App\Http\Controllers\ConfigurationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +28,13 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    
+    // Category routes
+    Route::resource('categories', CategoryController::class);
+    
+    // Wallet routes
+    Route::resource('wallets', WalletController::class);
+    
+    // Configuration routes
+    Route::resource('configurations', ConfigurationController::class);
 });
