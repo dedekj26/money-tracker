@@ -102,15 +102,6 @@ Money Tracker adalah aplikasi pengelolaan keuangan pribadi yang memungkinkan pen
 
    Aplikasi akan tersedia di `http://localhost:8000`
 
-## Optimasi
-
-Aplikasi ini telah dioptimasi untuk generasi PDF dengan:
-1. Mengubah penggunaan logo dari base64 ke direct image URL
-2. Menurunkan DPI dari 150 ke 96
-3. Implementasi sistem caching untuk PDF
-4. Selective loading relasi dalam database
-5. Penggunaan simbol Unicode alih-alih font spesifik
-
 ## Pengembangan
 
 Untuk pengembangan, Anda dapat menggunakan perintah berikut:
