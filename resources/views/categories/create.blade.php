@@ -71,8 +71,8 @@
                                 <select name="type" id="type" 
                                     class="pl-10 py-3 focus:ring-indigo-500 focus:border-indigo-500 block w-full text-base sm:text-sm border-gray-300 rounded-md @error('type') border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 @enderror" 
                                     required>
-                                    <option value="expense" {{ old('type') == 'expense' ? 'selected' : '' }}>Pengeluaran</option>
-                                    <option value="income" {{ old('type') == 'income' ? 'selected' : '' }}>Pemasukan</option>
+                                    <option value="out" {{ old('type') == 'out' ? 'selected' : '' }}>Pengeluaran</option>
+                                    <option value="in" {{ old('type') == 'in' ? 'selected' : '' }}>Pemasukan</option>
                                 </select>
                             </div>
                             
