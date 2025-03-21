@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\ConfigurationController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,9 @@ Route::middleware([
     
     // Wallet routes
     Route::resource('wallets', WalletController::class);
+    
+    // Transaction routes
+    Route::resource('transactions', TransactionController::class);
     
     // Configuration routes
     Route::resource('configurations', ConfigurationController::class);
