@@ -1052,6 +1052,9 @@ select {
 .mb-1 {
   margin-bottom: 0.25rem;
 }
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
 .mb-2 {
   margin-bottom: 0.5rem;
 }
@@ -1162,6 +1165,9 @@ select {
 }
 .h-6 {
   height: 1.5rem;
+}
+.h-64 {
+  height: 16rem;
 }
 .h-8 {
   height: 2rem;
@@ -1283,6 +1289,9 @@ select {
 .cursor-pointer {
   cursor: pointer;
 }
+.resize {
+  resize: both;
+}
 .list-inside {
   list-style-position: inside;
 }
@@ -1327,6 +1336,9 @@ select {
 }
 .gap-6 {
   gap: 1.5rem;
+}
+.gap-8 {
+  gap: 2rem;
 }
 .space-x-3 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
@@ -2455,6 +2467,9 @@ select {
   .md\:grid {
     display: grid;
   }
+  .md\:h-80 {
+    height: 20rem;
+  }
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2479,6 +2494,10 @@ select {
   .md\:text-2xl {
     font-size: 1.5rem;
     line-height: 2rem;
+  }
+  .md\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
   }
   .md\:text-xl {
     font-size: 1.25rem;

@@ -15,6 +15,37 @@
                         Aplikasi ini membantu Anda melacak pemasukan dan pengeluaran dengan mudah.
                     </p>
                     
+                    <!-- Charts Section -->
+                    <div class="mt-8 mb-10">
+                        <h4 class="text-base md:text-lg font-medium text-gray-900 mb-6">Ringkasan Transaksi Anda</h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Monthly Income & Expense Chart -->
+                            <div class="bg-white overflow-hidden shadow-lg rounded-lg">
+                                <div class="px-5 py-6 sm:p-6">
+                                    <h5 class="text-sm font-semibold text-gray-800 mb-4">Pemasukan & Pengeluaran 6 Bulan Terakhir</h5>
+                                    <div id="monthlyChart" class="w-full h-64 md:h-80"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Category Breakdown Chart -->
+                            <div class="bg-white overflow-hidden shadow-lg rounded-lg">
+                                <div class="px-5 py-6 sm:p-6">
+                                    <h5 class="text-sm font-semibold text-gray-800 mb-4">Distribusi Transaksi per Kategori</h5>
+                                    <div id="categoryChart" class="w-full h-64 md:h-80"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Wallet Summary Chart -->
+                            <div class="bg-white overflow-hidden shadow-lg rounded-lg md:col-span-2">
+                                <div class="px-5 py-6 sm:p-6">
+                                    <h5 class="text-sm font-semibold text-gray-800 mb-4">Ringkasan Transaksi per Dompet</h5>
+                                    <div id="walletChart" class="w-full h-64 md:h-80"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         <!-- Category Card -->
                         <div class="bg-white overflow-hidden shadow rounded-lg">
@@ -117,4 +148,299 @@
             </div>
         </div>
     </div>
+    
+    @push('scripts')
+    <!-- Include Apache eCharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Data dari controller
+            const months = @json($months);
+            const incomeValues = @json($incomeValues);
+            const expenseValues = @json($expenseValues);
+            const transactionsByCategory = @json($transactionsByCategory);
+            const walletData = @json($walletData);
+            
+            // Inisialisasi chart bulanan
+            const monthlyChart = echarts.init(document.getElementById('monthlyChart'));
+            
+            const monthlyOption = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    },
+                    formatter: function(params) {
+                        let tooltip = params[0].name + '<br/>';
+                        params.forEach(param => {
+                            tooltip += `${param.seriesName}: Rp ${param.value.toLocaleString('id-ID')}<br/>`;
+                        });
+                        return tooltip;
+                    }
+                },
+                legend: {
+                    data: ['Pemasukan', 'Pengeluaran'],
+                    top: 'bottom'
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '15%',
+                    top: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: months
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: {
+                        formatter: function(value) {
+                            if (value >= 1000000) {
+                                return (value / 1000000).toFixed(1) + ' JT';
+                            } else if (value >= 1000) {
+                                return (value / 1000).toFixed(0) + ' RB';
+                            }
+                            return value;
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name: 'Pemasukan',
+                        type: 'bar',
+                        stack: 'total',
+                        emphasis: {
+                            focus: 'series'
+                        },
+                        data: incomeValues,
+                        itemStyle: {
+                            color: '#10B981'
+                        }
+                    },
+                    {
+                        name: 'Pengeluaran',
+                        type: 'bar',
+                        stack: 'total',
+                        emphasis: {
+                            focus: 'series'
+                        },
+                        data: expenseValues,
+                        itemStyle: {
+                            color: '#EF4444'
+                        }
+                    }
+                ]
+            };
+            
+            monthlyChart.setOption(monthlyOption);
+            
+            // Inisialisasi chart kategori (pie chart)
+            const categoryChart = echarts.init(document.getElementById('categoryChart'));
+            
+            // Prepare data untuk pie chart
+            const pieData = [];
+            const incomeCategories = [];
+            const expenseCategories = [];
+            
+            transactionsByCategory.forEach(cat => {
+                const item = {
+                    name: cat.category_name,
+                    value: cat.total_amount,
+                    itemStyle: {
+                        color: cat.type === 'in' ? '#10B981' : '#EF4444'
+                    }
+                };
+                
+                pieData.push(item);
+                
+                if (cat.type === 'in') {
+                    incomeCategories.push(item);
+                } else {
+                    expenseCategories.push(item);
+                }
+            });
+            
+            const categoryOption = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: function(params) {
+                        return `${params.name}: Rp ${params.value.toLocaleString('id-ID')} (${params.percent}%)`;
+                    }
+                },
+                legend: {
+                    type: 'scroll',
+                    orient: 'vertical',
+                    right: 10,
+                    top: 20,
+                    bottom: 20,
+                    formatter: function(name) {
+                        // Potong nama kategori jika terlalu panjang
+                        if (name.length > 15) {
+                            return name.substring(0, 12) + '...';
+                        }
+                        return name;
+                    }
+                },
+                series: [
+                    {
+                        name: 'Kategori',
+                        type: 'pie',
+                        radius: ['40%', '70%'],
+                        avoidLabelOverlap: false,
+                        itemStyle: {
+                            borderRadius: 4,
+                            borderColor: '#fff',
+                            borderWidth: 2
+                        },
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                fontSize: '14',
+                                fontWeight: 'bold'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                        data: pieData
+                    }
+                ]
+            };
+            
+            categoryChart.setOption(categoryOption);
+            
+            // Inisialisasi chart dompet (bar chart)
+            const walletChart = echarts.init(document.getElementById('walletChart'));
+            
+            // Prepare data untuk wallet chart
+            const walletNames = Object.keys(walletData);
+            const walletIncome = [];
+            const walletExpense = [];
+            
+            walletNames.forEach(wallet => {
+                walletIncome.push(walletData[wallet].in || 0);
+                walletExpense.push(walletData[wallet].out || 0);
+            });
+            
+            const walletOption = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    },
+                    formatter: function(params) {
+                        let tooltip = params[0].name + '<br/>';
+                        params.forEach(param => {
+                            tooltip += `${param.seriesName}: Rp ${param.value.toLocaleString('id-ID')}<br/>`;
+                        });
+                        return tooltip;
+                    }
+                },
+                legend: {
+                    data: ['Pemasukan', 'Pengeluaran']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'value',
+                    axisLabel: {
+                        formatter: function(value) {
+                            if (value >= 1000000) {
+                                return (value / 1000000).toFixed(1) + ' JT';
+                            } else if (value >= 1000) {
+                                return (value / 1000).toFixed(0) + ' RB';
+                            }
+                            return value;
+                        }
+                    }
+                },
+                yAxis: {
+                    type: 'category',
+                    data: walletNames,
+                    axisLabel: {
+                        formatter: function(value) {
+                            // Potong nama dompet jika terlalu panjang
+                            if (value.length > 10) {
+                                return value.substring(0, 7) + '...';
+                            }
+                            return value;
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name: 'Pemasukan',
+                        type: 'bar',
+                        stack: 'total',
+                        label: {
+                            show: true,
+                            position: 'insideRight',
+                            formatter: function(params) {
+                                if (params.value === 0) return '';
+                                if (params.value >= 1000000) {
+                                    return (params.value / 1000000).toFixed(1) + ' JT';
+                                } else if (params.value >= 1000) {
+                                    return (params.value / 1000).toFixed(0) + ' RB';
+                                }
+                                return params.value;
+                            }
+                        },
+                        emphasis: {
+                            focus: 'series'
+                        },
+                        data: walletIncome,
+                        itemStyle: {
+                            color: '#10B981'
+                        }
+                    },
+                    {
+                        name: 'Pengeluaran',
+                        type: 'bar',
+                        stack: 'total',
+                        label: {
+                            show: true,
+                            position: 'insideRight',
+                            formatter: function(params) {
+                                if (params.value === 0) return '';
+                                if (params.value >= 1000000) {
+                                    return (params.value / 1000000).toFixed(1) + ' JT';
+                                } else if (params.value >= 1000) {
+                                    return (params.value / 1000).toFixed(0) + ' RB';
+                                }
+                                return params.value;
+                            }
+                        },
+                        emphasis: {
+                            focus: 'series'
+                        },
+                        data: walletExpense,
+                        itemStyle: {
+                            color: '#EF4444'
+                        }
+                    }
+                ]
+            };
+            
+            walletChart.setOption(walletOption);
+            
+            // Responsive chart
+            window.addEventListener('resize', function() {
+                monthlyChart.resize();
+                categoryChart.resize();
+                walletChart.resize();
+            });
+        });
+    </script>
+    @endpush
 </x-app-layout>
