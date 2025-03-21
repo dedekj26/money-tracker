@@ -23,7 +23,7 @@
                             <!-- Monthly Income & Expense Chart -->
                             <div class="bg-white overflow-hidden shadow-lg rounded-lg">
                                 <div class="px-5 py-6 sm:p-6">
-                                    <h5 class="text-sm font-semibold text-gray-800 mb-4">Pemasukan & Pengeluaran 6 Bulan Terakhir</h5>
+                                    <h5 class="text-sm font-semibold text-gray-800 mb-4">Pemasukan & Pengeluaran 6 Periode Terakhir ({{ $currentPeriod }})</h5>
                                     <div id="monthlyChart" class="w-full h-64 md:h-80"></div>
                                 </div>
                             </div>
@@ -31,7 +31,7 @@
                             <!-- Category Breakdown Chart -->
                             <div class="bg-white overflow-hidden shadow-lg rounded-lg">
                                 <div class="px-5 py-6 sm:p-6">
-                                    <h5 class="text-sm font-semibold text-gray-800 mb-4">Distribusi Transaksi per Kategori</h5>
+                                    <h5 class="text-sm font-semibold text-gray-800 mb-4">Distribusi Transaksi per Kategori ({{ $currentPeriod }})</h5>
                                     <div id="categoryChart" class="w-full h-64 md:h-80"></div>
                                 </div>
                             </div>
@@ -39,7 +39,7 @@
                             <!-- Wallet Summary Chart -->
                             <div class="bg-white overflow-hidden shadow-lg rounded-lg md:col-span-2">
                                 <div class="px-5 py-6 sm:p-6">
-                                    <h5 class="text-sm font-semibold text-gray-800 mb-4">Ringkasan Transaksi per Dompet</h5>
+                                    <h5 class="text-sm font-semibold text-gray-800 mb-4">Ringkasan Transaksi per Dompet ({{ $currentPeriod }})</h5>
                                     <div id="walletChart" class="w-full h-64 md:h-80"></div>
                                 </div>
                             </div>
@@ -156,9 +156,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Data dari controller
-            const months = @json($months);
-            const incomeValues = @json($incomeValues);
-            const expenseValues = @json($expenseValues);
+            const periods = @json($periods);
+            const incomeTotals = @json($incomeTotals);
+            const expenseTotals = @json($expenseTotals);
             const transactionsByCategory = @json($transactionsByCategory);
             const walletData = @json($walletData);
             
@@ -192,7 +192,7 @@
                 },
                 xAxis: {
                     type: 'category',
-                    data: months
+                    data: periods
                 },
                 yAxis: {
                     type: 'value',
@@ -215,7 +215,7 @@
                         emphasis: {
                             focus: 'series'
                         },
-                        data: incomeValues,
+                        data: incomeTotals,
                         itemStyle: {
                             color: '#10B981'
                         }
@@ -227,7 +227,7 @@
                         emphasis: {
                             focus: 'series'
                         },
-                        data: expenseValues,
+                        data: expenseTotals,
                         itemStyle: {
                             color: '#EF4444'
                         }
@@ -277,11 +277,15 @@
                     top: 20,
                     bottom: 20,
                     formatter: function(name) {
-                        // Potong nama kategori jika terlalu panjang
-                        if (name.length > 15) {
-                            return name.substring(0, 12) + '...';
+                        // Cari data kategori untuk mendapatkan nilai
+                        const item = [...incomeCategories, ...expenseCategories].find(item => item.name === name);
+                        const value = item ? `Rp ${item.value.toLocaleString('id-ID')}` : '';
+                        
+                        // Potong nama kategori jika terlalu panjang dan tambahkan nilai
+                        if (name.length > 12) {
+                            return name.substring(0, 10) + '... ' + value;
                         }
-                        return name;
+                        return name + ' ' + value;
                     }
                 },
                 series: [

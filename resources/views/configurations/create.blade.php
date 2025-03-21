@@ -42,14 +42,15 @@
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <div>
-                                <label for="start_date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Mulai</label>
+                                <label for="start_date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Mulai (1-31)</label>
                                 <div class="relative rounded-md shadow-sm">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                         </svg>
                                     </div>
-                                    <input type="date" name="start_date" id="start_date" value="{{ old('start_date') }}" 
+                                    <input type="number" name="start_date" id="start_date" value="{{ old('start_date', 1) }}" 
+                                        min="1" max="31" step="1"
                                         class="pl-10 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('start_date') border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 @enderror" 
                                         required>
                                 </div>
@@ -58,18 +59,19 @@
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                                 
-                                <p class="mt-1 text-sm text-gray-500">Tanggal awal periode laporan keuangan Anda.</p>
+                                <p class="mt-1 text-sm text-gray-500">Tanggal awal periode laporan bulanan Anda (1-31).</p>
                             </div>
                             
                             <div>
-                                <label for="end_date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Akhir</label>
+                                <label for="end_date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Akhir (1-31)</label>
                                 <div class="relative rounded-md shadow-sm">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                         </svg>
                                     </div>
-                                    <input type="date" name="end_date" id="end_date" value="{{ old('end_date') }}" 
+                                    <input type="number" name="end_date" id="end_date" value="{{ old('end_date', 25) }}" 
+                                        min="1" max="31" step="1"
                                         class="pl-10 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md @error('end_date') border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 @enderror" 
                                         required>
                                 </div>
@@ -78,7 +80,7 @@
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                                 
-                                <p class="mt-1 text-sm text-gray-500">Tanggal akhir periode laporan keuangan Anda.</p>
+                                <p class="mt-1 text-sm text-gray-500">Tanggal akhir periode laporan bulanan Anda (1-31).</p>
                             </div>
                         </div>
                         

@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="ml-4">
                                     <h4 class="text-sm font-medium text-gray-500">Tanggal Mulai</h4>
-                                    <p class="text-lg font-semibold text-gray-900">{{ \Carbon\Carbon::parse($configuration->start_date)->format('d F Y') }}</p>
+                                    <p class="text-lg font-semibold text-gray-900">Tanggal {{ $configuration->start_date }} setiap bulan</p>
                                 </div>
                             </div>
                             <div class="flex items-center">
@@ -75,7 +75,7 @@
                                 </div>
                                 <div class="ml-4">
                                     <h4 class="text-sm font-medium text-gray-500">Tanggal Akhir</h4>
-                                    <p class="text-lg font-semibold text-gray-900">{{ \Carbon\Carbon::parse($configuration->end_date)->format('d F Y') }}</p>
+                                    <p class="text-lg font-semibold text-gray-900">Tanggal {{ $configuration->end_date }} setiap bulan</p>
                                 </div>
                             </div>
                         </div>
@@ -106,8 +106,8 @@
                             </div>
                             <div class="ml-3">
                                 <p class="text-sm text-gray-600 mb-2">
-                                    Konfigurasi periode laporan digunakan untuk menentukan rentang waktu laporan keuangan Anda. 
-                                    Periode ini akan digunakan sebagai filter default saat melihat laporan dan transaksi.
+                                    Konfigurasi periode laporan digunakan untuk menentukan rentang waktu laporan keuangan Anda.
+                                    Periode ini berjalan dari tanggal {{ $configuration->start_date }} bulan sebelumnya hingga tanggal {{ $configuration->end_date }} bulan ini.
                                 </p>
                                 <p class="text-sm text-gray-600">
                                     Anda dapat mengubah periode ini kapan saja sesuai dengan kebutuhan pelaporan keuangan Anda.

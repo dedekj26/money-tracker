@@ -43,8 +43,8 @@ class ConfigurationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
+            'start_date' => 'required|integer|min:1|max:31',
+            'end_date' => 'required|integer|min:1|max:31',
         ]);
 
         Configuration::create($request->all());
@@ -85,8 +85,8 @@ class ConfigurationController extends Controller
     public function update(Request $request, Configuration $configuration)
     {
         $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
+            'start_date' => 'required|integer|min:1|max:31',
+            'end_date' => 'required|integer|min:1|max:31',
         ]);
 
         $configuration->update($request->all());
