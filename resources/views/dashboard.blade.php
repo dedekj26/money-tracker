@@ -4,21 +4,21 @@
     </x-slot>
 
     <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- User Navigation -->
             @include('components.user-navigation')
             
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mt-6">
-                <div class="p-6">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Selamat Datang di Money Tracker</h3>
-                    <p class="text-gray-600">
+                <div class="p-6 sm:p-8 md:p-10">
+                    <h3 class="text-lg md:text-xl font-medium text-gray-900 mb-4 md:mb-6">Selamat Datang di Money Tracker</h3>
+                    <p class="text-gray-600 mb-6">
                         Aplikasi ini membantu Anda melacak pemasukan dan pengeluaran dengan mudah.
                     </p>
                     
-                    <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                    <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         <!-- Category Card -->
                         <div class="bg-white overflow-hidden shadow rounded-lg">
-                            <div class="px-4 py-5 sm:p-6">
+                            <div class="px-5 py-6 sm:p-6">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 bg-indigo-500 rounded-md p-3">
                                         <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -39,7 +39,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-gray-50 px-4 py-4 sm:px-6">
+                            <div class="bg-gray-50 px-5 py-4 sm:px-6">
                                 <div class="text-sm">
                                     <a href="{{ route('categories.index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
                                         Kelola Kategori <span aria-hidden="true">&rarr;</span>
@@ -50,7 +50,7 @@
 
                         <!-- Wallet Card -->
                         <div class="bg-white overflow-hidden shadow rounded-lg">
-                            <div class="px-4 py-5 sm:p-6">
+                            <div class="px-5 py-6 sm:p-6">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 bg-green-500 rounded-md p-3">
                                         <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -71,7 +71,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-gray-50 px-4 py-4 sm:px-6">
+                            <div class="bg-gray-50 px-5 py-4 sm:px-6">
                                 <div class="text-sm">
                                     <a href="{{ route('wallets.index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
                                         Kelola Dompet <span aria-hidden="true">&rarr;</span>
@@ -82,7 +82,7 @@
 
                         <!-- Configuration Card -->
                         <div class="bg-white overflow-hidden shadow rounded-lg">
-                            <div class="px-4 py-5 sm:p-6">
+                            <div class="px-5 py-6 sm:p-6">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 bg-purple-500 rounded-md p-3">
                                         <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -104,7 +104,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-gray-50 px-4 py-4 sm:px-6">
+                            <div class="bg-gray-50 px-5 py-4 sm:px-6">
                                 <div class="text-sm">
                                     <a href="{{ route('configurations.index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
                                         Kelola Konfigurasi <span aria-hidden="true">&rarr;</span>
